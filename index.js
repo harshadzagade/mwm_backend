@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const roleRoutes = require('./routes/roleRoutes');
+const mediaRoutes = require('./routes/mediaRoutes');
+const artistRoutes = require('./routes/artistRoutes');
 const PORT = 5000;
 require('dotenv').config();
 const app = express();
@@ -24,11 +26,14 @@ app.use((error, req, res, next) => {
     const message = error.message;
     const data = error.data;
     res.status(status).json({ message: message, data: data });
+    next();
 });
 
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/roles', roleRoutes);
+app.use('/api/media', mediaRoutes);
+app.use('/api/artists', artistRoutes);
 
 app.listen(PORT, () => {
     console.log("Server running on " + PORT);

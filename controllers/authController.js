@@ -28,8 +28,8 @@ exports.register = async (req, res, next) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        
-        
+
+
         const userRole = await Role.findOne({ _id: role });
 
         if (!userRole) {
@@ -53,7 +53,7 @@ exports.register = async (req, res, next) => {
 
         await newUser.save();
 
-        res.status(201).json({ message: 'User registered successfully', userinfo:newUser } );
+        res.status(201).json({ message: 'User registered successfully', userinfo: newUser });
     } catch (error) {
         if (!error.statusCode) {
             error.statusCode = 500;
@@ -64,10 +64,7 @@ exports.register = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
 
-    const {
-        gr_no,
-        password,
-    } = req.body;
+    const { gr_no, password } = req.body;
 
     try {
 
@@ -96,9 +93,25 @@ exports.login = async (req, res, next) => {
         }
 
 
-        const token = jwt.sign({ userId: user._id }, config.secretKey, { expiresIn: '1h' });
+        const expirationTime = Math.floor(Date.now() / 1000) + 45 * 60;
 
-        res.json({ token, user: { gr_no: user.gr_no, role: user.role.name } });
+
+
+        const token = jwt.sign({
+
+            userId: user._id,
+            exp: expirationTime
+        },
+            config.secretKey, {
+        });
+
+        res.json({
+            token, user: {
+                gr_no: user.gr_no,
+                role: user.role.role,
+                message:"Welcome"
+            }
+        });
 
     } catch (error) {
         if (!error.statusCode) {
