@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const roleRoutes = require('./routes/roleRoutes');
 const mediaRoutes = require('./routes/mediaRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 const artistRoutes = require('./routes/artistRoutes');
 const PORT = 5000;
 require('dotenv').config();
@@ -33,6 +34,7 @@ app.use((error, req, res, next) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/roles', roleRoutes);
 app.use('/api/media', mediaRoutes);
+app.use('/api/categories', categoryRoutes);
 app.use('/api/artists', artistRoutes);
 
 app.listen(PORT, () => {

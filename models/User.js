@@ -38,6 +38,11 @@ const userSchema = new mongoose.Schema({
         type:String,
         required: true
     },
+    likedPlaylist:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Media',
+        required:true
+    },
     sessionExpiry: {
         type:Date,
         required: false
